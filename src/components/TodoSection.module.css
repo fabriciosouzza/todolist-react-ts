@@ -1,0 +1,67 @@
+.allsection {
+    width: 46rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.task_form {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    margin-top: -1.6875rem;
+}
+
+.task_form textarea {
+    height: 3.375rem;
+    width: 100%;
+    padding: 1rem;
+    resize: none;
+    
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--gray-300);
+    background-color: var(--gray-500);
+
+    border-color: var(--gray-700);
+    border-radius: 8px;
+}
+
+.task_form button {
+    height: 3.25rem;
+    width: 5.625rem;
+    margin-left: auto;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: bold;
+
+    color: var(--gray-100);
+    background-color: var(--blue-dark);
+
+    border: none;
+    border-radius: 8px;
+}
+
+.tasks_status {
+    font-size: 0.875rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tasks_status :first-child{
+    color: var(--blue);
+}
+
+.tasks_status :nth-child(2) {
+    color: var(--purple);
+}
+
+.tasks_status p span {
+    color: var(--gray-200);
+    background-color: var(--gray-400);
+}
