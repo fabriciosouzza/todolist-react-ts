@@ -26,6 +26,14 @@
     border-radius: 8px;
 }
 
+.task_form textarea:focus {
+    outline: none;
+    color: var(--gray-100);
+    border-width: 1px;
+    border-color: var(--purple-dark);
+
+}
+
 .task_form button {
     height: 3.25rem;
     width: 5.625rem;
@@ -45,23 +53,60 @@
 
     border: none;
     border-radius: 8px;
+
+    transition: background-color 0.2s;
+}
+
+.task_form button:hover {
+    background-color: var(--blue);
 }
 
 .tasks_status {
     font-size: 0.875rem;
     display: flex;
     justify-content: space-between;
+    margin-top: 4rem;
 }
 
-.tasks_status :first-child{
+.todoview{
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
     color: var(--blue);
+
+    display: flex;
+    gap: 0.5rem;
 }
 
-.tasks_status :nth-child(2) {
+.doneview {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
     color: var(--purple);
-}
 
-.tasks_status p span {
+    display: flex;
+    gap: 0.5rem;
+}
+.todoview span, .doneview span {
     color: var(--gray-200);
     background-color: var(--gray-400);
+
+    padding: 0.125rem 0.57rem;
+    border-radius: 999px;
 }
+
+.task_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    /* padding: 4rem 0; */
+
+    margin-top: 1.5rem;
+
+    color: var(--gray-300);
+    border-top: 1px solid var(--gray-400);
+    border-radius: 8px;
+}
+
+/* .task_wrapper :first-child {
+    margin-bottom: 1rem;
+} */

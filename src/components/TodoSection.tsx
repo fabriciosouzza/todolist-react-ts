@@ -1,3 +1,5 @@
+import { Task } from './Task'
+import { Empty } from './Empty'
 import { PlusCircle } from '@phosphor-icons/react'
 import styles from './TodoSection.module.css'
 
@@ -7,15 +9,19 @@ export function TodoSection() {
 
             <form className={styles.task_form}>
                 <textarea placeholder='Add a new task'></textarea>
-                <button>Create<PlusCircle size={18} /></button>
+                <button><p>Add</p><PlusCircle size={20} /></button>
             </form>
 
             <div className={styles.tasks_status}>
-                <p>To Do <span className={styles.teste}>0</span></p>
-                <p>Done <span>0</span></p>
+                <p className={styles.todoview}>To Do <span>0</span></p>
+                <p className={styles.doneview}>Done <span>2 of 5</span></p>
             </div>
 
-            <div className={styles.task_wrapper}></div>
+            <div className={styles.task_wrapper}>
+                <Task />
+                <Task />
+                <Empty />
+            </div>
         </div>
     )
 }
