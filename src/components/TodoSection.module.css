@@ -59,6 +59,7 @@
 
 .task_form button:hover {
     background-color: var(--blue);
+    cursor: pointer;
 }
 
 .tasks_status {
