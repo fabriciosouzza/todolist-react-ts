@@ -18,9 +18,9 @@ export function TodoSection() {
             </div>
 
             <div className={styles.task_wrapper}>
-                <Task />
-                <Task />
                 <Empty />
+                <Task />
+                <Task />
             </div>
         </div>
     )
