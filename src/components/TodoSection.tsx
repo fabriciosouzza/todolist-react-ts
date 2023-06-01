@@ -31,7 +31,7 @@ export function TodoSection() {
         handleNewTaskId()
         
         event.preventDefault()
-        setTasks([...tasks, {id: newTaskId, content: newTaskContent, isDone: false}])
+        setTasks([...tasks, {id: newTaskId, content: newTaskContent, status: false}])
         setNewTaskContent('')     
     }
     
@@ -51,7 +51,19 @@ export function TodoSection() {
         setTasks(tasksUpdated);
     }
 
+    function changeStatus(id) {
+        const tasksWithDone = tasks.map(item => {
+            if (item.id == id) {
+                item.status = item.status ? false : true
+                return item
+            } else {
+                return item
+            }
+        })
+        setTasks(tasksWithDone);
+    }
 
+//  todo vies -> two functions that iterates the task array
 
     
     return (
@@ -69,7 +81,7 @@ export function TodoSection() {
 
             <div className={styles.task_wrapper}>
                 {tasks.map(item => {
-                    return <Task key={item.id} content={item.content} status={item.isDone} onDeleteTask={deleteTask} />
+                    return <Task key={item.id} id={item.id} content={item.content} status={item.status} onDeleteTask={deleteTask} onChangeStatus={changeStatus} />
                 })}
             </div>
         </div>
