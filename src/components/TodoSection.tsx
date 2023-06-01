@@ -1,15 +1,65 @@
 import { Task } from './Task'
 import { Empty } from './Empty'
+
 import { PlusCircle } from '@phosphor-icons/react'
 import styles from './TodoSection.module.css'
+import { useState } from 'react'
+
+
+// interface Task {
+//     id: number,
+//     content: string,
+//     isDone: boolean
+// }
+
+// const tasks = [
+//     {
+//         id: 1,
+//         content: "sdfasdf",
+//         isDone: true
+//     }
+// ]
 
 export function TodoSection() {
+
+    const [tasks, setTasks] = useState([]);
+    const [newTaskContent, setNewTaskContent] = useState('')
+
+    const [newTaskId, setNewTaskId] = useState(1)
+
+    function handleNewTask() {
+        handleNewTaskId()
+        
+        event.preventDefault()
+        setTasks([...tasks, {id: newTaskId, content: newTaskContent, isDone: false}])
+        setNewTaskContent('')     
+    }
+    
+    function handleNewTaskContent() {
+        
+        setNewTaskContent(event?.target.value)
+    }
+    
+    function handleNewTaskId() {
+        setNewTaskId(newTaskId + 1)
+    }
+
+    function deleteTask(id) {
+        const tasksUpdated = tasks.filter(item => {
+            return item.id != id;
+        })
+        setTasks(tasksUpdated);
+    }
+
+
+
+    
     return (
         <div className={styles.allsection}>
 
-            <form className={styles.task_form}>
-                <textarea placeholder='Add a new task'></textarea>
-                <button><p>Add</p><PlusCircle size={20} /></button>
+            <form className={styles.task_form} onSubmit={handleNewTask}>
+                <textarea placeholder='Add a new task' value={newTaskContent} onChange={handleNewTaskContent}></textarea>
+                <button type='submit'><p>Add</p><PlusCircle size={20} /></button>
             </form>
 
             <div className={styles.tasks_status}>
@@ -18,9 +68,9 @@ export function TodoSection() {
             </div>
 
             <div className={styles.task_wrapper}>
-                <Empty />
-                <Task />
-                <Task />
+                {tasks.map(item => {
+                    return <Task key={item.id} content={item.content} status={item.isDone} onDeleteTask={deleteTask} />
+                })}
             </div>
         </div>
     )
