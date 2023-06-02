@@ -3,55 +3,50 @@ import { Empty } from './Empty'
 
 import { PlusCircle } from '@phosphor-icons/react'
 import styles from './TodoSection.module.css'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 
-// interface Task {
-//     id: number,
-//     content: string,
-//     isDone: boolean
-// }
+interface Task {
+    id: string,
+    content: string,
+    status: boolean
+}
 
-// const tasks = [
-//     {
-//         id: 1,
-//         content: "sdfasdf",
-//         isDone: true
-//     }
-// ]
 
 export function TodoSection() {
 
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [newTaskContent, setNewTaskContent] = useState('')
 
-    const [newTaskId, setNewTaskId] = useState(1)
 
-    function handleNewTask() {
-        handleNewTaskId()
+    function handleNewTask(event: FormEvent) {
+
+        const taskToAdd: Task = {
+            id: uuidv4(),
+            content: newTaskContent,
+            status: false
+        }
+
         
         event.preventDefault()
-        setTasks([...tasks, {id: newTaskId, content: newTaskContent, status: false}])
+        setTasks([...tasks, taskToAdd])
         setNewTaskContent('')     
     }
     
-    function handleNewTaskContent() {
-        
-        setNewTaskContent(event?.target.value)
+    function handleNewTaskContent(event: ChangeEvent<HTMLTextAreaElement>) {
+        setNewTaskContent(event.target.value)
     }
     
-    function handleNewTaskId() {
-        setNewTaskId(newTaskId + 1)
-    }
 
-    function deleteTask(id) {
+    function deleteTask(id: string) {
         const tasksUpdated = tasks.filter(item => {
             return item.id != id;
         })
         setTasks(tasksUpdated);
     }
 
-    function changeStatus(id) {
+    function changeStatus(id: string) {
         const tasksWithDone = tasks.map(item => {
             if (item.id == id) {
                 item.status = item.status ? false : true
@@ -63,24 +58,33 @@ export function TodoSection() {
         setTasks(tasksWithDone);
     }
 
-//  todo vies -> two functions that iterates the task array
+    function numberOfTasksDone() {
+        const tasksDone = tasks.filter(item => {
+            if (item.status) {
+                return item;
+            }
+        })
 
+        return tasksDone.length;
+    }
+
+    const isEmpty = tasks.length == 0 ? true: false
     
     return (
         <div className={styles.allsection}>
 
             <form className={styles.task_form} onSubmit={handleNewTask}>
-                <textarea placeholder='Add a new task' value={newTaskContent} onChange={handleNewTaskContent}></textarea>
+                <textarea placeholder='Add a new task' value={newTaskContent} onChange={handleNewTaskContent} required></textarea>
                 <button type='submit'><p>Add</p><PlusCircle size={20} /></button>
             </form>
 
             <div className={styles.tasks_status}>
-                <p className={styles.todoview}>To Do <span>0</span></p>
-                <p className={styles.doneview}>Done <span>2 of 5</span></p>
+                <p className={styles.todoview}>To Do <span>{`${tasks.length - numberOfTasksDone()}`}</span></p>
+                <p className={styles.doneview}>Done <span>{`${numberOfTasksDone()} of ${tasks.length}`}</span></p>
             </div>
 
             <div className={styles.task_wrapper}>
-                {tasks.map(item => {
+                {isEmpty ?  <Empty /> : tasks.map(item => {
                     return <Task key={item.id} id={item.id} content={item.content} status={item.status} onDeleteTask={deleteTask} onChangeStatus={changeStatus} />
                 })}
             </div>
